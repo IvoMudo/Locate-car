@@ -16,7 +16,6 @@ public class Client {
     private long id;
     private String name;
     private String phone;
-    @Column(unique = true)
     private String document;
     private String type;
 

@@ -25,31 +25,31 @@ public class ClientController {
 
     //Paginas
 
-    @GetMapping("/clients")
-    public ModelAndView clientes(
-            @RequestParam(defaultValue = "1", value = "page") Integer numeroPagina,
-            @RequestParam(defaultValue = "5", value = "size") Integer tamanhoPagina) {
-
-        ModelAndView modelAndView = new ModelAndView("clients.html");
-        Page<Client> clientPage = this.clientService.listarPaginado(numeroPagina - 1, tamanhoPagina);
-        modelAndView.addObject("clients", clientPage.getContent());
-        modelAndView.addObject("totalPages", clientPage.getTotalPages());
-        modelAndView.addObject("currentPage", numeroPagina);
-        modelAndView.addObject("pageSize", clientPage.getSize());
-        return modelAndView;
-    }
 //    @GetMapping("/clients")
-//    public String clients(Model model){
-//    List<Client> clients = this.clientService.listarTodos();
-//        model.addAttribute("clients", clients);
-//        return "clients.html";
+//    public ModelAndView clientes(
+//            @RequestParam(defaultValue = "1", value = "page") Integer numeroPagina,
+//            @RequestParam(defaultValue = "5", value = "size") Integer tamanhoPagina) {
+//
+//        ModelAndView modelAndView = new ModelAndView("clients.html");
+//        Page<Client> clientPage = this.clientService.listarPaginado(numeroPagina - 1, tamanhoPagina);
+//        modelAndView.addObject("clients", clientPage.getContent());
+//        modelAndView.addObject("totalPages", clientPage.getTotalPages());
+//        modelAndView.addObject("currentPage", numeroPagina);
+//        modelAndView.addObject("pageSize", clientPage.getSize());
+//        return modelAndView;
 //    }
+    @GetMapping("/clients")
+    public String clients(Model model){
+    List<Client> clients = this.clientService.listarTodos();
+        model.addAttribute("clients", clients);
+        return "clients.html";
+    }
 
     @GetMapping("/client/add")
-    public String addClient(Model model,Client clientDTO) {
-        model.addAttribute("client", new Client());
-        model.addAttribute("veiculo", Objects.nonNull(clientDTO) ? clientDTO : new ClientDTO());
-        return "client-add.html";
+    public String addClient(Model model,Client client) {
+        model.addAttribute("add", Boolean.TRUE);
+        model.addAttribute("client", Objects.nonNull(client) ? client : new Client());
+        return "client-add";
     }
     @PostMapping("/client/add")
     public String createClient(@Valid @ModelAttribute("client") Client client,
@@ -80,7 +80,7 @@ public class ClientController {
                                 @PathVariable("clientId") Long clientId) {
         client.setId(clientId);
         this.clientService.createClient(client);
-        return "redirect:/veiculos";
+        return "redirect:/clients";
     }
 
 }
