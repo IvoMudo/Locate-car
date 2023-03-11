@@ -23,26 +23,19 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
-    //Paginas
 
-//    @GetMapping("/clients")
-//    public ModelAndView clientes(
-//            @RequestParam(defaultValue = "1", value = "page") Integer numeroPagina,
-//            @RequestParam(defaultValue = "5", value = "size") Integer tamanhoPagina) {
-//
-//        ModelAndView modelAndView = new ModelAndView("clients.html");
-//        Page<Client> clientPage = this.clientService.listarPaginado(numeroPagina - 1, tamanhoPagina);
-//        modelAndView.addObject("clients", clientPage.getContent());
-//        modelAndView.addObject("totalPages", clientPage.getTotalPages());
-//        modelAndView.addObject("currentPage", numeroPagina);
-//        modelAndView.addObject("pageSize", clientPage.getSize());
-//        return modelAndView;
-//    }
     @GetMapping("/clients")
-    public String clients(Model model){
-    List<Client> clients = this.clientService.listarTodos();
-        model.addAttribute("clients", clients);
-        return "clients.html";
+    public ModelAndView clientes(
+            @RequestParam(defaultValue = "1", value = "page") Integer numeroPagina,
+            @RequestParam(defaultValue = "5", value = "size") Integer tamanhoPagina) {
+
+        ModelAndView modelAndView = new ModelAndView("clients.html");
+        Page<Client> clientPage = this.clientService.listarPaginado(numeroPagina - 1, tamanhoPagina);
+        modelAndView.addObject("clients", clientPage.getContent());
+        modelAndView.addObject("totalPages", clientPage.getTotalPages());
+        modelAndView.addObject("currentPage", numeroPagina);
+        modelAndView.addObject("pageSize", clientPage.getSize());
+        return modelAndView;
     }
 
     @GetMapping("/client/add")

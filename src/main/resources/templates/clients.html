@@ -27,6 +27,7 @@
                     <th>Telefone</th>
                     <th>Documento</th>
                     <th>Tipo</th>
+                    <th>CEP</th>
             </tr>
             <tr th:each="client : ${clients}">
                 <td th:utext="${client.id}">...</td>
@@ -34,6 +35,7 @@
                 <td th:utext="${client.phone}">...</td>
                 <td th:utext="${client.document}">...</td>
                 <td th:utext="${client.type}">...</td>
+                <td th:utext="${client.cepNumber}">...</td>
                 <td>
                     <a class="btn btn-primary btn-sm"
                     th:href="@{/client/{clientId}/edit(clientId=${client.id})}">Edit</a>
